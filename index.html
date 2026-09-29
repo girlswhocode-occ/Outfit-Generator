@@ -22,6 +22,7 @@
           simple outfit to wear — no overthinking required.
         </p>
       </header>
+
       <form class="card" method="post" action="/">
         <fieldset>
           <legend>Vibe</legend>
@@ -40,6 +41,7 @@
             </label>
           </div>
         </fieldset>
+
         <fieldset>
           <legend>Weather</legend>
           <div class="choices">
@@ -57,6 +59,7 @@
             </label>
           </div>
         </fieldset>
+
         <fieldset>
           <legend>Occasion</legend>
           <div class="choices">
@@ -74,8 +77,10 @@
             </label>
           </div>
         </fieldset>
+
         <button type="submit">Generate my outfit</button>
       </form>
+
       <section class="result" aria-live="polite">
         <h2>Your outfit</h2>
         {% if result %}
