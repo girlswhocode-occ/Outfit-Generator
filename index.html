@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Outfit Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <p class="eyebrow">Outfit Studio</p>
+        <h1>Build a look that matches the day.</h1>
+        <p class="lede">
+          Choose a vibe, the weather, and the occasion. Hit generate and get a
+          simple outfit to wear — no overthinking required.
+        </p>
+      </header>
+      <form class="card" method="post" action="/">
+        <fieldset>
+          <legend>Vibe</legend>
+          <div class="choices">
+            <label class="choice">
+              <input type="radio" name="vibe" value="casual" required {% if vibe == "casual" %}checked{% endif %} />
+              <span class="pill">Casual</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="vibe" value="classy" {% if vibe == "classy" %}checked{% endif %} />
+              <span class="pill">Classy</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="vibe" value="bold" {% if vibe == "bold" %}checked{% endif %} />
+              <span class="pill">Bold</span>
+            </label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Weather</legend>
+          <div class="choices">
+            <label class="choice">
+              <input type="radio" name="weather" value="hot" required {% if weather == "hot" %}checked{% endif %} />
+              <span class="pill">Hot</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="weather" value="mild" {% if weather == "mild" %}checked{% endif %} />
+              <span class="pill">Mild</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="weather" value="cold" {% if weather == "cold" %}checked{% endif %} />
+              <span class="pill">Cold</span>
+            </label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Occasion</legend>
+          <div class="choices">
+            <label class="choice">
+              <input type="radio" name="occasion" value="class" required {% if occasion == "class" %}checked{% endif %} />
+              <span class="pill">Class</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="occasion" value="hanging out" {% if occasion == "hanging out" %}checked{% endif %} />
+              <span class="pill">Hanging out</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="occasion" value="going out" {% if occasion == "going out" %}checked{% endif %} />
+              <span class="pill">Going out</span>
+            </label>
+          </div>
+        </fieldset>
+        <button type="submit">Generate my outfit</button>
+      </form>
+      <section class="result" aria-live="polite">
+        <h2>Your outfit</h2>
+        {% if result %}
+        <p class="result-body">{{ result }}</p>
+        {% else %}
+        <p class="result-empty">
+          Your recommendation will show up here after you generate a look.
+        </p>
+        {% endif %}
+      </section>
+    </div>
+  </body>
+</html>
