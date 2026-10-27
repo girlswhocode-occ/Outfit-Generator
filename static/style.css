@@ -173,6 +173,29 @@ button[type="submit"]:focus-visible {
   color: var(--muted);
 }
 
+.error {
+  margin: 0 0 1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #9a3f18;
+  border-radius: 0.6rem;
+  color: #843313;
+  background: #fff0e7;
+}
+
+.reset {
+  display: block;
+  width: fit-content;
+  margin: 0.85rem auto 0;
+  padding: 0.25rem;
+  color: var(--muted);
+  text-underline-offset: 0.2em;
+}
+
+.reset:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
 @media (min-width: 560px) {
   .choices {
     grid-template-columns: repeat(3, 1fr);

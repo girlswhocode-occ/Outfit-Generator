@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Outfit Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">Outfit Studio</p>
+        <h1>Build a look that matches the day.</h1>
+        <p class="lede">
+          Choose a vibe, the weather, and the occasion. Hit generate and get a
+          simple outfit to wear &mdash; no overthinking required.
+        </p>
+      </header>
+
+      <form class="card" method="post" action="{{ url_for('index') }}">
+        {% if error %}
+        <p class="error" role="alert">{{ error }}</p>
+        {% endif %}
+
+        {% for field, options in choices.items() %}
+        <fieldset>
+          <legend>{{ field | capitalize }}</legend>
+          <div class="choices">
+            {% for option in options %}
+            <label class="choice">
+              <input
+                type="radio"
+                name="{{ field }}"
+                value="{{ option }}"
+                required
+                {% if selections[field] == option %}checked{% endif %}
+              />
+              <span class="pill">{{ option | capitalize }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </fieldset>
+        {% endfor %}
+
+        <button type="submit">Generate my outfit</button>
+        <a class="reset" href="{{ url_for('index') }}">Start over</a>
+      </form>
+
+      <section class="result" aria-live="polite">
+        <h2>Your outfit</h2>
+        {% if result %}
+        <p class="result-body">{{ result }}</p>
+        {% else %}
+        <p class="result-empty">
+          Your recommendation will show up here after you generate a look.
+        </p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>

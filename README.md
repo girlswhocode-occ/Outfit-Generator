@@ -1,28 +1,38 @@
 # Outfit Studio
 
-A small Flask app that recommends an outfit from three choices: **vibe**, **weather**, and **occasion**. The page is HTML and CSS; Flask handles the form. There is no database, login, or JavaScript.
+A small Flask app that recommends an outfit from your **vibe**, the **weather**,
+and the **occasion**. Includes 27 curated combinations, accessible radio controls,
+server-side validation, and a start-over link. No database or JavaScript required.
 
 ## Run locally
 
-You need Python 3.
+Use Python 3.10 or newer. From the project folder:
 
 ```powershell
-cd C:\Users\May\outfit-generator
-python -m pip install -r requirements.txt
-python app.py
+python -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+.venv\Scripts\python app.py
 ```
 
-Then open [http://127.0.0.1:5000](http://127.0.0.1:5000) in a browser.
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000). Stop with **Ctrl+C**.
 
-Stop the server with **Ctrl+C** in the terminal.
+For automatic reload during development:
+
+```powershell
+.venv\Scripts\python -m flask --app app run --debug
+```
+
+The built-in server is intended for local development.
 
 ## How it works
 
-1. The form posts `vibe`, `weather`, and `occasion` to `/`.
-2. `choose_outfit(vibe, weather, occasion)` in `app.py` picks a string with `if` / `elif` / `else`.
-3. The same page shows the result.
+1. Select a vibe, weather, and occasion, then submit the form.
+2. The server validates each choice and looks up its recommendation.
+3. The page displays the outfit and retains your choices so you can adjust them.
+4. **Start over** clears the form and recommendation.
 
-**Choices**
+Missing or unsupported choices display a helpful error and return HTTP 400.
+The same selections always return the same curated outfit.
 
 | Field | Options |
 | --- | --- |
@@ -30,14 +40,25 @@ Stop the server with **Ctrl+C** in the terminal.
 | Weather | hot, mild, cold |
 | Occasion | class, hanging out, going out |
 
-To change what gets recommended, edit `choose_outfit` in `app.py`. Flask debug mode reloads after you save.
-
-## Files
+## Project layout
 
 ```text
-outfit-generator/
-  app.py                 Flask app and outfit rules
-  requirements.txt       Flask
-  templates/index.html   Form and result
-  static/style.css       Layout and styling
+app.py                 Routes, form choices, and validation
+outfits.py             Recommendations grouped by vibe, weather, and occasion
+templates/index.html   Form and result
+static/style.css       Responsive styling and keyboard focus states
+test_app.py            Recommendation and HTTP tests
+requirements.txt       Flask dependency
 ```
+
+To change an outfit, edit its entry in `outfits.py`. Keep an entry for every
+combination defined by `CHOICES` in `app.py`.
+
+## Run checks
+
+```powershell
+.venv\Scripts\python -m unittest -v
+```
+
+Tests cover all 27 combinations, form selection retention, invalid and missing
+inputs, clearing the form, and loading the page and stylesheet.
